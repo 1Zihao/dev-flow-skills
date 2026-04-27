@@ -1,5 +1,9 @@
 # Dev Flow Skills
 
+[![npm version](https://img.shields.io/npm/v/dev-flow-skills.svg)](https://www.npmjs.com/package/dev-flow-skills)
+[![CI](https://github.com/1Zihao/dev-flow-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/1Zihao/dev-flow-skills/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Governed development-flow skills for AI coding agents.
 
 ```text
@@ -7,6 +11,16 @@ clarify -> plan -> orchestrate -> execute -> accept
 ```
 
 Dev Flow Skills turns `/dev-flow` into a disciplined software-delivery workflow. It is designed for agents that need to clarify requirements, write real planning documents, build an executable task plan, coordinate implementation, handle Git safely, and finish with acceptance evidence instead of a chat-only summary.
+
+```mermaid
+flowchart LR
+  A[Clarify] --> B[Plan]
+  B --> C[Orchestrate]
+  C --> D[Execute]
+  D --> E[Accept]
+  D -->|Requirement changes| B
+  D -->|Task failure / drift| C
+```
 
 ## Why this exists
 
@@ -69,13 +83,27 @@ Project-local installs write to `./.opencode/` and override global installs for 
 
 ### Install with an AI agent
 
-Ask your agent to follow:
+Copy and paste this into your coding agent:
 
 ```text
-https://raw.githubusercontent.com/1Zihao/dev-flow-skills/main/install/agent-install.md
-```
+Install Dev Flow Skills for this environment.
 
-Default agent instruction: install globally unless the user asks for project-local installation, and never overwrite modified files without preserving the local copy.
+Follow the instructions at:
+https://raw.githubusercontent.com/1Zihao/dev-flow-skills/main/install/agent-install.md
+
+Default to global installation unless I explicitly ask for project-local installation.
+Use npm when available:
+  npm install -g dev-flow-skills
+  dev-flow install --global
+  dev-flow doctor --global
+
+If this is Codex, also install Codex skill discovery support:
+  dev-flow install-codex
+  dev-flow doctor-codex
+
+Do not overwrite existing modified files. Preserve local files and write incoming versions as .new unless I explicitly approve --force.
+After installation, report exactly what changed and what verification passed.
+```
 
 ## What gets installed
 
@@ -174,6 +202,9 @@ dev-flow update
 dev-flow update --global
 dev-flow doctor
 dev-flow doctor --global
+dev-flow install-codex
+dev-flow update-codex
+dev-flow doctor-codex
 dev-flow uninstall
 dev-flow uninstall --global
 dev-flow version

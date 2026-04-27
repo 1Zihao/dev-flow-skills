@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.3] - 2026-04-27
+
+### Changed
+
+- Improve README with badges, workflow diagram, copy-paste AI agent install prompt, and Codex CLI commands.
+
 ## [0.1.2] - 2026-04-27
 
 ### Added
