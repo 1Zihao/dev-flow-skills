@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.5] - 2026-04-27
+
+### Changed
+
+- Make the README AI-agent installation section a directly copy-pasteable prompt.
+
 ## [0.1.4] - 2026-04-27
 
 ### Changed

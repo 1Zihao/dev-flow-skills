@@ -83,13 +83,19 @@ Project-local installs write to `./.opencode/` and override global installs for 
 
 ### Install with an AI agent
 
-Copy the prompt from the Agent installation guide:
+Tell your coding agent:
 
 ```text
+Fetch and follow the Dev Flow Skills agent installation instructions from:
 https://raw.githubusercontent.com/1Zihao/dev-flow-skills/main/install/agent-install.md
+
+Install globally by default unless I explicitly ask for project-local installation.
+If this environment is Codex, also install Codex skill discovery support.
+Do not overwrite modified local files unless I explicitly approve --force.
+After installation, run the relevant doctor command and report exactly what changed.
 ```
 
-That file contains the full copy-paste prompt and platform-specific agent instructions.
+For a longer prompt and platform-specific details, see [`install/agent-install.md`](install/agent-install.md).
 
 ## Platform guides
 
