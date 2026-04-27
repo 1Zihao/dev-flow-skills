@@ -1,0 +1,33 @@
+{
+  "name": "dev-flow-skills",
+  "version": "0.1.0",
+  "description": "Governed development-flow skills for AI coding agents.",
+  "type": "module",
+  "bin": {
+    "dev-flow": "bin/dev-flow.mjs"
+  },
+  "files": [
+    ".opencode",
+    "bin",
+    "scripts",
+    "install",
+    "docs",
+    "examples",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "doctor": "node bin/dev-flow.mjs doctor --target .",
+    "dry-run:global": "node bin/dev-flow.mjs install --global --dry-run",
+    "dry-run:local": "node bin/dev-flow.mjs install --target . --dry-run"
+  },
+  "keywords": [
+    "opencode",
+    "ai-agent",
+    "skills",
+    "dev-flow",
+    "workflow"
+  ],
+  "license": "MIT"
+}
