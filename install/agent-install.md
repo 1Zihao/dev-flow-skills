@@ -18,9 +18,10 @@ Use npm when available:
   dev-flow install --global
   dev-flow doctor --global
 
-If this is Codex, also install Codex skill discovery support:
-  dev-flow install-codex
-  dev-flow doctor-codex
+Detect the current agent platform and follow the matching platform guide when one exists:
+  OpenCode -> install/opencode.md
+  Codex -> .codex/INSTALL.md
+  Unknown platform -> use the default global install, then report that no platform-specific adapter was applied.
 
 Do not overwrite existing modified files. Preserve local files and write incoming versions as .new unless I explicitly approve --force.
 After installation, report exactly what changed and what verification passed.
@@ -49,11 +50,23 @@ Project target:
 ## Required behavior
 
 1. Determine the target scope.
-2. Install `command/dev-flow.md` and all `skills/dev-flow-*` directories.
-3. Preserve existing modified files.
-4. Write or update `dev-flow-manifest.json` with version and checksums.
-5. Run `dev-flow doctor` for the selected scope if the CLI is available.
-6. Report exactly what changed and what was verified.
+2. Detect the current agent platform if possible.
+3. Install the default global package unless the user requested project-local installation.
+4. Apply the matching platform guide when one exists.
+5. Preserve existing modified files.
+6. Write or update `dev-flow-manifest.json` with version and checksums where applicable.
+7. Run the relevant doctor command for each installed adapter.
+8. Report exactly what changed and what was verified.
+
+## Platform routing
+
+| Platform | Guide | Verification |
+| --- | --- | --- |
+| OpenCode | `install/opencode.md` | `dev-flow doctor --global` or `dev-flow doctor` |
+| Codex | `.codex/INSTALL.md` | `dev-flow doctor-codex` |
+| Unknown | Default global install | `dev-flow doctor --global` |
+
+Do not hard-code every future platform into the user-facing prompt. Add new platform behavior here and in the platform guide.
 
 ## Commands
 
@@ -80,7 +93,7 @@ dev-flow update --global
 dev-flow doctor --global
 ```
 
-Codex skill discovery install:
+Platform-specific installs are documented in the platform guides. For example, Codex skill discovery uses:
 
 ```bash
 npm install -g dev-flow-skills

@@ -90,7 +90,7 @@ Fetch and follow the Dev Flow Skills agent installation instructions from:
 https://raw.githubusercontent.com/1Zihao/dev-flow-skills/main/install/agent-install.md
 
 Install globally by default unless I explicitly ask for project-local installation.
-If this environment is Codex, also install Codex skill discovery support.
+Detect the current agent platform and follow the matching platform guide when one exists.
 Do not overwrite modified local files unless I explicitly approve --force.
 After installation, run the relevant doctor command and report exactly what changed.
 ```

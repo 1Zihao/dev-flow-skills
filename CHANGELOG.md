@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.7] - 2026-04-27
+
+### Changed
+
+- Make the AI-agent installation prompt platform-neutral and move platform-specific routing into `install/agent-install.md`.
+
 ## [0.1.6] - 2026-04-27
 
 ### Changed
