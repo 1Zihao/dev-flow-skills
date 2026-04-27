@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const sourceRoot = path.join(packageRoot, '.opencode');
 const codexSkillsRoot = path.join(packageRoot, 'skills');
+const codexCommandSource = path.join(packageRoot, 'commands', 'dev-flow.md');
 const packageJsonPath = path.join(packageRoot, 'package.json');
 const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
 const manifestName = 'dev-flow-manifest.json';
@@ -30,7 +31,7 @@ async function main() {
   }
 
   if (command === 'install-codex' || command === 'update-codex') {
-    await installCodexSkills(command);
+    await installCodexAdapter(command);
     return;
   }
 
@@ -59,6 +60,15 @@ function codexTargetRoot() {
   }
 
   return path.join(homedir(), '.agents', 'skills', 'dev-flow-skills');
+}
+
+function codexCommandTarget() {
+  const explicitTarget = flags.get('commands-target');
+  if (typeof explicitTarget === 'string') {
+    return path.resolve(process.cwd(), explicitTarget);
+  }
+
+  return path.join(homedir(), '.agents', 'commands', 'dev-flow.md');
 }
 
 function parseFlags(items) {
@@ -195,45 +205,63 @@ async function doctor() {
   console.log('\nReady.');
 }
 
-async function installCodexSkills(action) {
-  const target = codexTargetRoot();
+async function installCodexAdapter(action) {
+  const skillsTarget = codexTargetRoot();
+  const commandTarget = codexCommandTarget();
   const dryRun = flags.has('dry-run');
   const force = flags.has('force');
-  const targetExists = existsSync(target);
+  const targets = [
+    { label: 'skills', source: codexSkillsRoot, target: skillsTarget, type: 'dir' },
+    { label: 'command', source: codexCommandSource, target: commandTarget, type: 'file' },
+  ];
 
   console.log(`Dev Flow Skills ${action}`);
-  console.log(`Source: ${codexSkillsRoot}`);
-  console.log(`Target: ${target}`);
+  console.log(`Skills source: ${codexSkillsRoot}`);
+  console.log(`Skills target: ${skillsTarget}`);
+  console.log(`Command source: ${codexCommandSource}`);
+  console.log(`Command target: ${commandTarget}`);
   if (dryRun) {
     console.log('Mode: dry-run');
   }
 
-  if (targetExists) {
-    const stat = lstatSync(target);
-    if (!stat.isSymbolicLink() && !force) {
-      console.log('\n⚠ target exists and is not a symlink. Preserving it.');
-      console.log('Use --force to replace it intentionally.');
-      return;
+  let blocked = false;
+  for (const item of targets) {
+    const targetExists = existsSync(item.target);
+    if (targetExists) {
+      const stat = lstatSync(item.target);
+      if (!stat.isSymbolicLink() && !force) {
+        blocked = true;
+        console.log(`\n⚠ ${item.label} target exists and is not a symlink. Preserving it: ${item.target}`);
+        console.log('Use --force to replace it intentionally.');
+        continue;
+      }
+      console.log(`~ replace ${item.target}`);
+    } else {
+      console.log(`+ link ${item.target}`);
     }
-    console.log(`~ replace ${target}`);
-  } else {
-    console.log(`+ link ${target}`);
+  }
+
+  if (blocked) {
+    return;
   }
 
   if (dryRun) {
     return;
   }
 
-  await mkdir(path.dirname(target), { recursive: true });
-  if (targetExists) {
-    rmSync(target, { recursive: true, force: true });
+  for (const item of targets) {
+    await mkdir(path.dirname(item.target), { recursive: true });
+    if (existsSync(item.target)) {
+      rmSync(item.target, { recursive: true, force: true });
+    }
+    await symlink(item.source, item.target, item.type);
   }
-  await symlink(codexSkillsRoot, target, 'dir');
-  console.log('\nCodex skills installed. Restart Codex to discover them.');
+  console.log('\nCodex skills and /dev-flow command installed. Restart Codex to discover them.');
 }
 
 async function doctorCodex() {
-  const target = codexTargetRoot();
+  const skillsTarget = codexTargetRoot();
+  const commandTarget = codexCommandTarget();
   const required = [
     'dev-flow-governor/SKILL.md',
     'dev-flow-planning/SKILL.md',
@@ -243,16 +271,21 @@ async function doctorCodex() {
   ];
 
   console.log('Dev Flow Skills Codex Doctor');
-  console.log(`Target: ${target}\n`);
+  console.log(`Skills target: ${skillsTarget}`);
+  console.log(`Command target: ${commandTarget}\n`);
 
-  let ok = existsSync(target);
-  console.log(`${ok ? '✓' : '✗'} ${target}`);
+  let ok = existsSync(skillsTarget);
+  console.log(`${ok ? '✓' : '✗'} ${skillsTarget}`);
 
   for (const relativePath of required) {
-    const exists = existsSync(path.join(target, relativePath));
+    const exists = existsSync(path.join(skillsTarget, relativePath));
     ok = ok && exists;
     console.log(`${exists ? '✓' : '✗'} ${relativePath}`);
   }
+
+  const commandExists = existsSync(commandTarget);
+  ok = ok && commandExists;
+  console.log(`${commandExists ? '✓' : '✗'} ${commandTarget}`);
 
   if (!ok) {
     process.exitCode = 1;
@@ -373,9 +406,9 @@ Usage:
   dev-flow install [--global|--target PATH] [--dry-run] [--force]
   dev-flow update [--global|--target PATH] [--dry-run] [--force]
   dev-flow doctor [--global|--target PATH]
-  dev-flow install-codex [--target PATH] [--dry-run] [--force]
-  dev-flow update-codex [--target PATH] [--dry-run] [--force]
-  dev-flow doctor-codex [--target PATH]
+  dev-flow install-codex [--target PATH] [--commands-target PATH] [--dry-run] [--force]
+  dev-flow update-codex [--target PATH] [--commands-target PATH] [--dry-run] [--force]
+  dev-flow doctor-codex [--target PATH] [--commands-target PATH]
   dev-flow uninstall [--global|--target PATH] [--dry-run]
   dev-flow version
 `);

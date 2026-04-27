@@ -34,8 +34,9 @@ jobs:
       - name: Verify Codex install and doctor
         run: |
           tmpdir="$(mktemp -d)"
-          node bin/dev-flow.mjs install-codex --target "$tmpdir/dev-flow-skills"
-          node bin/dev-flow.mjs doctor-codex --target "$tmpdir/dev-flow-skills"
+          node bin/dev-flow.mjs install-codex --target "$tmpdir/skills/dev-flow-skills" --commands-target "$tmpdir/commands/dev-flow.md"
+          node bin/dev-flow.mjs doctor-codex --target "$tmpdir/skills/dev-flow-skills" --commands-target "$tmpdir/commands/dev-flow.md"
+          test -L "$tmpdir/commands/dev-flow.md"
 
       - name: Verify unmanaged file protection
         run: |
