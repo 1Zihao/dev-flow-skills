@@ -31,6 +31,12 @@ jobs:
           node bin/dev-flow.mjs doctor --target "$tmpdir"
           node scripts/update-dev-flow.mjs --target "$tmpdir" --dry-run
 
+      - name: Verify Codex install and doctor
+        run: |
+          tmpdir="$(mktemp -d)"
+          node bin/dev-flow.mjs install-codex --target "$tmpdir/dev-flow-skills"
+          node bin/dev-flow.mjs doctor-codex --target "$tmpdir/dev-flow-skills"
+
       - name: Verify unmanaged file protection
         run: |
           tmpdir="$(mktemp -d)"

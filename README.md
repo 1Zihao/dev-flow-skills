@@ -91,6 +91,28 @@ Default agent instruction: install globally unless the user asks for project-loc
     dev-flow-acceptance/
 ```
 
+## Codex support
+
+This package also includes a Codex plugin manifest and Codex-discoverable skills:
+
+```text
+.codex-plugin/plugin.json
+.codex/INSTALL.md
+skills/dev-flow-*/
+```
+
+Codex discovers skills through `~/.agents/skills`. Until the package is listed in the Codex plugin marketplace, use the manual Codex instructions:
+
+```bash
+npm install -g dev-flow-skills
+dev-flow install-codex
+dev-flow doctor-codex
+```
+
+Then restart Codex and ask it to use the `dev-flow-governor` skill.
+
+See `.codex/INSTALL.md` for details.
+
 ## Skill map
 
 | Skill | Responsibility |

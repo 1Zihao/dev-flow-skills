@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 
 import { createHash } from 'node:crypto';
-import { existsSync, readdirSync, readFileSync, rmSync, statSync } from 'node:fs';
-import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { existsSync, lstatSync, readdirSync, readFileSync, rmSync, statSync } from 'node:fs';
+import { copyFile, mkdir, readFile, symlink, writeFile } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const sourceRoot = path.join(packageRoot, '.opencode');
+const codexSkillsRoot = path.join(packageRoot, 'skills');
 const packageJsonPath = path.join(packageRoot, 'package.json');
 const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
 const manifestName = 'dev-flow-manifest.json';
@@ -28,6 +29,16 @@ async function main() {
     return;
   }
 
+  if (command === 'install-codex' || command === 'update-codex') {
+    await installCodexSkills(command);
+    return;
+  }
+
+  if (command === 'doctor-codex') {
+    await doctorCodex();
+    return;
+  }
+
   if (command === 'uninstall') {
     await uninstall();
     return;
@@ -39,6 +50,15 @@ async function main() {
   }
 
   printHelp();
+}
+
+function codexTargetRoot() {
+  const explicitTarget = flags.get('target');
+  if (typeof explicitTarget === 'string') {
+    return path.resolve(process.cwd(), explicitTarget);
+  }
+
+  return path.join(homedir(), '.agents', 'skills', 'dev-flow-skills');
 }
 
 function parseFlags(items) {
@@ -175,6 +195,74 @@ async function doctor() {
   console.log('\nReady.');
 }
 
+async function installCodexSkills(action) {
+  const target = codexTargetRoot();
+  const dryRun = flags.has('dry-run');
+  const force = flags.has('force');
+  const targetExists = existsSync(target);
+
+  console.log(`Dev Flow Skills ${action}`);
+  console.log(`Source: ${codexSkillsRoot}`);
+  console.log(`Target: ${target}`);
+  if (dryRun) {
+    console.log('Mode: dry-run');
+  }
+
+  if (targetExists) {
+    const stat = lstatSync(target);
+    if (!stat.isSymbolicLink() && !force) {
+      console.log('\n⚠ target exists and is not a symlink. Preserving it.');
+      console.log('Use --force to replace it intentionally.');
+      return;
+    }
+    console.log(`~ replace ${target}`);
+  } else {
+    console.log(`+ link ${target}`);
+  }
+
+  if (dryRun) {
+    return;
+  }
+
+  await mkdir(path.dirname(target), { recursive: true });
+  if (targetExists) {
+    rmSync(target, { recursive: true, force: true });
+  }
+  await symlink(codexSkillsRoot, target, 'dir');
+  console.log('\nCodex skills installed. Restart Codex to discover them.');
+}
+
+async function doctorCodex() {
+  const target = codexTargetRoot();
+  const required = [
+    'dev-flow-governor/SKILL.md',
+    'dev-flow-planning/SKILL.md',
+    'dev-flow-execution/SKILL.md',
+    'dev-flow-git/SKILL.md',
+    'dev-flow-acceptance/SKILL.md',
+  ];
+
+  console.log('Dev Flow Skills Codex Doctor');
+  console.log(`Target: ${target}\n`);
+
+  let ok = existsSync(target);
+  console.log(`${ok ? '✓' : '✗'} ${target}`);
+
+  for (const relativePath of required) {
+    const exists = existsSync(path.join(target, relativePath));
+    ok = ok && exists;
+    console.log(`${exists ? '✓' : '✗'} ${relativePath}`);
+  }
+
+  if (!ok) {
+    process.exitCode = 1;
+    console.log('\nNot ready. Run `dev-flow install-codex` and restart Codex.');
+    return;
+  }
+
+  console.log('\nReady. Restart Codex if it was already running.');
+}
+
 async function uninstall() {
   const target = targetRoot();
   const dryRun = flags.has('dry-run');
@@ -285,6 +373,9 @@ Usage:
   dev-flow install [--global|--target PATH] [--dry-run] [--force]
   dev-flow update [--global|--target PATH] [--dry-run] [--force]
   dev-flow doctor [--global|--target PATH]
+  dev-flow install-codex [--target PATH] [--dry-run] [--force]
+  dev-flow update-codex [--target PATH] [--dry-run] [--force]
+  dev-flow doctor-codex [--target PATH]
   dev-flow uninstall [--global|--target PATH] [--dry-run]
   dev-flow version
 `);

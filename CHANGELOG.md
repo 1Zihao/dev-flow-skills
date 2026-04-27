@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.2] - 2026-04-27
+
+### Added
+
+- Add Codex plugin metadata in `.codex-plugin/plugin.json`.
+- Add Codex native skill discovery instructions in `.codex/INSTALL.md`.
+- Add top-level `skills/` directory for Codex-compatible skill discovery.
+- Add `install-codex`, `update-codex`, and `doctor-codex` CLI commands.
+
 ## [0.1.1] - 2026-04-27
 
 ### Changed

@@ -1,0 +1,40 @@
+{
+  "name": "dev-flow-skills",
+  "version": "0.1.2",
+  "description": "Governed development-flow skills for AI coding agents.",
+  "author": {
+    "name": "1Zihao",
+    "url": "https://github.com/1Zihao"
+  },
+  "homepage": "https://github.com/1Zihao/dev-flow-skills",
+  "repository": "https://github.com/1Zihao/dev-flow-skills",
+  "license": "MIT",
+  "keywords": [
+    "dev-flow",
+    "skills",
+    "planning",
+    "execution",
+    "git",
+    "acceptance",
+    "workflow"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Dev Flow Skills",
+    "shortDescription": "Governed planning, execution, Git safety, and acceptance workflow for coding agents",
+    "longDescription": "Use Dev Flow Skills to guide agent work through clarification, formal planning documents, task orchestration, continuous execution, Git safety, and final acceptance evidence.",
+    "developerName": "1Zihao",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use dev-flow to plan and implement this feature.",
+      "Run a governed dev-flow for this project change."
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": []
+  }
+}

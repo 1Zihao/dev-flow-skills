@@ -1,6 +1,6 @@
 {
   "name": "dev-flow-skills",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Governed development-flow skills for AI coding agents.",
   "type": "module",
   "bin": {
@@ -8,6 +8,9 @@
   },
   "files": [
     ".opencode",
+    ".codex-plugin",
+    ".codex",
+    "skills",
     "bin",
     "scripts",
     "install",
