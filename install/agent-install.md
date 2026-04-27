@@ -93,7 +93,7 @@ dev-flow update --global
 dev-flow doctor --global
 ```
 
-Platform-specific installs are documented in the platform guides. For example, Codex skill discovery uses:
+Platform-specific installs are documented in the platform guides. For example, Codex skill and command discovery uses:
 
 ```bash
 npm install -g dev-flow-skills

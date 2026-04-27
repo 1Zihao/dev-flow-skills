@@ -1,12 +1,15 @@
 # Installing Dev Flow Skills for Codex
 
-Codex discovers skills through the native skill discovery directory:
+Codex discovers skills and commands through native discovery directories:
 
 ```text
 ~/.agents/skills/
+~/.agents/commands/
 ```
 
-This package includes a Codex plugin manifest at `.codex-plugin/plugin.json` and a top-level `skills/` directory for Codex-compatible skill discovery.
+This package includes a Codex plugin manifest at `.codex-plugin/plugin.json`, a top-level `skills/` directory for Codex-compatible skill discovery, and a root `commands/dev-flow.md` file for the `/dev-flow` command.
+
+Codex plugin commands are discovered from a plugin-root `commands/` directory; they are not declared with a `commands` field in `.codex-plugin/plugin.json`. This matches the official Codex plugin examples and the Superpowers plugin structure.
 
 ## Codex App
 
@@ -16,7 +19,7 @@ Until marketplace listing is available, use the manual install below.
 
 ## Manual install
 
-After installing the npm package, link the bundled skills into Codex's discovery directory:
+After installing the npm package, link the bundled skills and command into Codex's discovery directories:
 
 ```bash
 npm install -g dev-flow-skills
@@ -24,19 +27,21 @@ dev-flow install-codex
 dev-flow doctor-codex
 ```
 
-Then restart Codex so it discovers the skills.
+Then restart Codex so it discovers the skills and `/dev-flow` command.
 
 ## Manual Git install
 
-Alternatively, clone the repository and symlink its skills into Codex's discovery directory:
+Alternatively, clone the repository and symlink its skills and command into Codex's discovery directories:
 
 ```bash
 git clone https://github.com/1Zihao/dev-flow-skills.git ~/.codex/dev-flow-skills
 mkdir -p ~/.agents/skills
+mkdir -p ~/.agents/commands
 ln -s ~/.codex/dev-flow-skills/skills ~/.agents/skills/dev-flow-skills
+ln -s ~/.codex/dev-flow-skills/commands/dev-flow.md ~/.agents/commands/dev-flow.md
 ```
 
-Then restart Codex so it discovers the skills.
+Then restart Codex so it discovers the skills and `/dev-flow` command.
 
 ## Install from npm package contents
 
@@ -44,13 +49,19 @@ The CLI commands above are preferred because they locate the global npm package 
 
 ## Using the workflow in Codex
 
-Ask Codex to use the governor skill explicitly:
+Use the slash command when available:
+
+```text
+/dev-flow <your task>
+```
+
+Or ask Codex to use the governor skill explicitly:
 
 ```text
 Use the dev-flow-governor skill for this task and follow the dev-flow planning, execution, git, and acceptance workflow.
 ```
 
-Codex skill discovery is not the same as OpenCode slash-command discovery. The OpenCode `/dev-flow` command remains available through `.opencode/command/dev-flow.md`; Codex primarily discovers skills from `~/.agents/skills`.
+OpenCode and Codex use different command locations. OpenCode `/dev-flow` is installed through `.opencode/command/dev-flow.md`; Codex `/dev-flow` is installed through `~/.agents/commands/dev-flow.md` or a plugin-root `commands/dev-flow.md`.
 
 ## Updating
 
@@ -66,14 +77,18 @@ If installed by npm:
 ```bash
 npm install -g dev-flow-skills@latest
 dev-flow update-codex
+dev-flow doctor-codex
 ```
 
 Restart Codex after updating.
+
+If you installed an earlier skills-only Codex adapter, `dev-flow update-codex` adds the missing `/dev-flow` command symlink.
 
 ## Uninstalling
 
 ```bash
 rm ~/.agents/skills/dev-flow-skills
+rm ~/.agents/commands/dev-flow.md
 ```
 
 Optionally delete the clone:

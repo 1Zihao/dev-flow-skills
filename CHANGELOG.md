@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.8] - 2026-04-27
+
+### Added
+
+- Add Codex `/dev-flow` command support through a root `commands/dev-flow.md` file.
+- Update `install-codex`, `update-codex`, and `doctor-codex` to manage both Codex skills and the Codex command symlink.
+
+### Changed
+
+- Document that Codex discovers commands from `commands/` / `~/.agents/commands`, not from a `.codex-plugin/plugin.json` `commands` field.
+
 ## [0.1.7] - 2026-04-27
 
 ### Changed
