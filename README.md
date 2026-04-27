@@ -61,7 +61,7 @@ Project-local installs write to `./.opencode/` and override global installs for 
 Ask your agent to follow:
 
 ```text
-https://raw.githubusercontent.com/your-org/dev-flow-skills/main/install/agent-install.md
+https://raw.githubusercontent.com/1Zihao/dev-flow-skills/main/install/agent-install.md
 ```
 
 Default agent instruction: install globally unless the user asks for project-local installation, and never overwrite modified files without preserving the local copy.
@@ -159,4 +159,4 @@ Use `--dry-run` to preview file operations and `--force` to overwrite modified i
 
 ## Status
 
-This package is intended to be copied into its own GitHub repository. Replace `your-org` with the final repository owner before publishing the Agent install URL.
+This package is intended to be copied into its own GitHub repository. The Agent install URL points to the `1Zihao/dev-flow-skills` repository.
