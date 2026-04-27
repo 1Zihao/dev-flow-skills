@@ -146,24 +146,16 @@ For governed work, the flow is designed to produce durable project artifacts suc
 
 Exact paths are project-specific and should be decided during planning.
 
-## CLI commands
+## Common commands
 
 ```bash
-dev-flow install
 dev-flow install --global
-dev-flow update
 dev-flow update --global
-dev-flow doctor
 dev-flow doctor --global
-dev-flow install-codex
-dev-flow update-codex
-dev-flow doctor-codex
-dev-flow uninstall
-dev-flow uninstall --global
 dev-flow version
 ```
 
-Use `--dry-run` to preview file operations and `--force` to overwrite modified installed files intentionally.
+Platform-specific commands are documented in the platform guides. Use `--dry-run` to preview file operations and `--force` to overwrite modified installed files intentionally.
 
 ## Safety model
 
