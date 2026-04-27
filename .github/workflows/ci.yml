@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check CLI syntax
+        run: |
+          node --check bin/dev-flow.mjs
+          node --check scripts/install-dev-flow.mjs
+          node --check scripts/update-dev-flow.mjs
+
+      - name: Verify install and doctor
+        run: |
+          tmpdir="$(mktemp -d)"
+          node bin/dev-flow.mjs install --target "$tmpdir"
+          node bin/dev-flow.mjs doctor --target "$tmpdir"
+          node scripts/update-dev-flow.mjs --target "$tmpdir" --dry-run
+
+      - name: Verify unmanaged file protection
+        run: |
+          tmpdir="$(mktemp -d)"
+          mkdir -p "$tmpdir/.opencode/command"
+          printf 'custom local command\n' > "$tmpdir/.opencode/command/dev-flow.md"
+          node bin/dev-flow.mjs install --target "$tmpdir"
+          test "$(cat "$tmpdir/.opencode/command/dev-flow.md")" = "custom local command"
+          test -f "$tmpdir/.opencode/command/dev-flow.md.new"
+
+      - name: Verify uninstall preserves modified files
+        run: |
+          tmpdir="$(mktemp -d)"
+          node bin/dev-flow.mjs install --target "$tmpdir"
+          printf 'modified\n' > "$tmpdir/.opencode/command/dev-flow.md"
+          node bin/dev-flow.mjs uninstall --target "$tmpdir"
+          test "$(cat "$tmpdir/.opencode/command/dev-flow.md")" = "modified"
+
+      - name: Check package contents
+        run: npm pack --dry-run

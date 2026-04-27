@@ -23,7 +23,28 @@ Dev Flow Skills adds gates, handoffs, runtime state, and final acceptance checks
 
 ## Quick start
 
-### Recommended: global install
+### Recommended today: install from GitHub
+
+Until the npm package is published, install directly from the GitHub repository:
+
+```bash
+git clone https://github.com/1Zihao/dev-flow-skills.git
+cd dev-flow-skills
+npm install -g .
+dev-flow install --global
+dev-flow doctor --global
+```
+
+Update to the latest GitHub version:
+
+```bash
+cd dev-flow-skills
+git pull
+npm install -g .
+dev-flow update --global
+```
+
+### Future npm install
 
 Install once and use `/dev-flow` in any project.
 
@@ -38,6 +59,8 @@ Update to the latest version:
 npm install -g dev-flow-skills@latest
 dev-flow update --global
 ```
+
+The npm commands become the recommended path after the package is published to npm.
 
 Check the install:
 
