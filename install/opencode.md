@@ -2,6 +2,46 @@
 
 Dev Flow Skills installs an OpenCode command plus focused skills.
 
+## Install
+
+Global install:
+
+```bash
+npm install -g dev-flow-skills
+dev-flow install --global
+dev-flow doctor --global
+```
+
+Project-local install:
+
+```bash
+cd your-project
+dev-flow install
+dev-flow doctor
+```
+
+Update global install:
+
+```bash
+npm install -g dev-flow-skills@latest
+dev-flow update --global
+dev-flow doctor --global
+```
+
+## What gets installed
+
+```text
+.opencode/
+  command/
+    dev-flow.md
+  skills/
+    dev-flow-governor/
+    dev-flow-planning/
+    dev-flow-execution/
+    dev-flow-git/
+    dev-flow-acceptance/
+```
+
 ## Command
 
 ```text

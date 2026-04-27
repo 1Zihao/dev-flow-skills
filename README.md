@@ -83,63 +83,20 @@ Project-local installs write to `./.opencode/` and override global installs for 
 
 ### Install with an AI agent
 
-Copy and paste this into your coding agent:
+Copy the prompt from the Agent installation guide:
 
 ```text
-Install Dev Flow Skills for this environment.
-
-Follow the instructions at:
 https://raw.githubusercontent.com/1Zihao/dev-flow-skills/main/install/agent-install.md
-
-Default to global installation unless I explicitly ask for project-local installation.
-Use npm when available:
-  npm install -g dev-flow-skills
-  dev-flow install --global
-  dev-flow doctor --global
-
-If this is Codex, also install Codex skill discovery support:
-  dev-flow install-codex
-  dev-flow doctor-codex
-
-Do not overwrite existing modified files. Preserve local files and write incoming versions as .new unless I explicitly approve --force.
-After installation, report exactly what changed and what verification passed.
 ```
 
-## What gets installed
+That file contains the full copy-paste prompt and platform-specific agent instructions.
 
-```text
-.opencode/
-  command/
-    dev-flow.md
-  skills/
-    dev-flow-governor/
-    dev-flow-planning/
-    dev-flow-execution/
-    dev-flow-git/
-    dev-flow-acceptance/
-```
+## Platform guides
 
-## Codex support
-
-This package also includes a Codex plugin manifest and Codex-discoverable skills:
-
-```text
-.codex-plugin/plugin.json
-.codex/INSTALL.md
-skills/dev-flow-*/
-```
-
-Codex discovers skills through `~/.agents/skills`. Until the package is listed in the Codex plugin marketplace, use the manual Codex instructions:
-
-```bash
-npm install -g dev-flow-skills
-dev-flow install-codex
-dev-flow doctor-codex
-```
-
-Then restart Codex and ask it to use the `dev-flow-governor` skill.
-
-See `.codex/INSTALL.md` for details.
+- OpenCode: [`install/opencode.md`](install/opencode.md)
+- Codex: [`.codex/INSTALL.md`](.codex/INSTALL.md)
+- Agent installation: [`install/agent-install.md`](install/agent-install.md)
+- Manual installation details: [`install/manual-install.md`](install/manual-install.md)
 
 ## Skill map
 
@@ -150,16 +107,6 @@ See `.codex/INSTALL.md` for details.
 | `dev-flow-execution` | Continuous execution, task settlement, dynamic replanning, and runtime state |
 | `dev-flow-git` | Worktree, shared-working-tree, branch, PR, patch, rollback, and conflict safety |
 | `dev-flow-acceptance` | Final verification, quality evidence, and delivery report |
-
-## Resolution order
-
-Dev Flow Skills should be resolved in this order:
-
-1. Project-local `.opencode/command` and `.opencode/skills`
-2. Global `~/.opencode/command` and `~/.opencode/skills`
-3. Remote install instructions
-
-This lets one global installation serve most projects while still allowing individual repositories to pin or customize the workflow.
 
 ## Typical flow
 
@@ -220,7 +167,3 @@ Use `--dry-run` to preview file operations and `--force` to overwrite modified i
 - Parallel no-worktree mode should use patch generation plus main-agent serial apply.
 - Local modifications are protected by manifest checksums during update.
 - Final success requires verification evidence, not only agent self-reporting.
-
-## Status
-
-This package is intended to be copied into its own GitHub repository. The Agent install URL points to the `1Zihao/dev-flow-skills` repository.

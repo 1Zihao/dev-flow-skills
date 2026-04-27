@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.4] - 2026-04-27
+
+### Changed
+
+- Move platform-specific installation detail out of README and into platform guides.
+- Add a copy-paste AI agent prompt to `install/agent-install.md`.
+- Expand OpenCode installation details in `install/opencode.md`.
+
 ## [0.1.3] - 2026-04-27
 
 ### Changed
