@@ -1,11 +1,11 @@
 ---
-name: dev-flow-governor
+name: dev-flow-master
 description: Use when a development request needs governed routing, planning gates, execution coordination, Git safety boundaries, and final acceptance decisions.
 ---
 
-# dev-flow-governor
+# dev-flow-master
 
-`dev-flow-governor` is the global dispatcher for the governed development flow. It owns entry routing, complexity classification, stage order, phase gates, state signals, and final stage authorization.
+`dev-flow-master` is the global dispatcher for the governed development flow. It owns entry routing, complexity classification, stage order, phase gates, state signals, and final stage authorization.
 
 All user-facing replies in this governed flow must be written in Chinese. Command names, file paths, artifact IDs, and literal CLI commands may remain in their original language.
 
@@ -13,7 +13,7 @@ All user-facing replies in this governed flow must be written in Chinese. Comman
 
 | Area | Skill | Owns |
 |---|---|---|
-| Global dispatch | `dev-flow-governor` | classification, route selection, phase gates, signal checks, progress routing |
+| Global dispatch | `dev-flow-master` | classification, route selection, phase gates, signal checks, progress routing |
 | Planning | `dev-flow-planning` | four Chinese docs, review cadence, design sufficiency, task DAG, `task-orchestration.md`, Executable Test Matrix |
 | Execution | `dev-flow-execution` | Phase 3 run-to-completion, task settlement, Runtime Orchestration State, dynamic replanning, failure handling, progress updates |
 | Git safety | `dev-flow-git` | worktree/branch modes, PR/direct/patch-ready modes, permissions, conflicts, rollback, cleanup |
@@ -23,7 +23,7 @@ Required loading rule: before stage-specific work, load the skill that owns that
 
 ## Complexity Classification
 
-Classify before forcing a heavy path. Classification is an internal governor decision, not a separate user gate.
+Classify before forcing a heavy path. Classification is an internal master decision, not a separate user gate.
 
 | Dimension | Lightweight signal | Medium signal | Heavyweight signal |
 |---|---|---|---|
@@ -59,11 +59,11 @@ Required routing output to the user:
 
 ## State and Gate Signal Protocol
 
-Stage skills may perform stage-specific work, but the governor is the only component allowed to declare a governed stage complete.
+Stage skills may perform stage-specific work, but the master is the only component allowed to declare a governed stage complete.
 
 | Signal | Produced by | Required evidence |
 |---|---|---|
-| `routing_decided` | `dev-flow-governor` | classification, key dimensions, chosen path, next stage |
+| `routing_decided` | `dev-flow-master` | classification, key dimensions, chosen path, next stage |
 | `documentation_start_approved` | `dev-flow-planning` | user confirmed document drafting should begin, clarification answers or accepted unknowns, review mode |
 | `planning_docs_ready` | `dev-flow-planning` | four document paths, requirement variant, review mode, design sufficiency result, known risks |
 | `task_orchestration_ready` | `dev-flow-planning` | `task-orchestration.md`, DAG/batches, Executable Test Matrix, automation readiness result |
@@ -101,8 +101,8 @@ Do not use it for a tiny one-file fix, a simple explanation request, or direct c
 | Stage / Activity | Primary owner | Sub-agent allowed? | Required skill / constraint |
 |---|---|---|---|
 | Existing change/spec check | Main agent | No | Routing judgment only |
-| Complexity routing | Main agent | No | Governor internal classification |
-| Planning path selection | Main agent | No | Governor internal routing |
+| Complexity routing | Main agent | No | Master internal classification |
+| Planning path selection | Main agent | No | Master internal routing |
 | Review-mode decision | Main agent + user | No | `dev-flow-planning` |
 | Brainstorming handoff | Main agent coordinating brainstorming | Yes, only through required brainstorming path | `dev-flow-planning` |
 | Four Chinese docs | Main agent | No | `dev-flow-planning`; must persist local files |
@@ -112,7 +112,7 @@ Do not use it for a tiny one-file fix, a simple explanation request, or direct c
 | Phase 3 execution | Main agent + task agents | Yes | `dev-flow-execution`; task agents implement only assigned scope |
 | Git operations | Main agent / task agent within approved mode | Yes within task scope | `dev-flow-git`; no unauthorized side effects |
 | Acceptance | Main agent | No | `dev-flow-acceptance` |
-| Completion gate | Main agent | No | `dev-flow-acceptance` evidence + governor final decision |
+| Completion gate | Main agent | No | `dev-flow-acceptance` evidence + master final decision |
 
 Ownership rules:
 
@@ -124,7 +124,7 @@ Ownership rules:
 
 ```text
 Entry
-  dev-flow-governor: existing context check + classification + route
+  dev-flow-master: existing context check + classification + route
 
 Planning
   dev-flow-planning: pre-document clarification + user approval → four docs → [Phase 1 Gate] → task orchestration/test matrix
@@ -144,7 +144,7 @@ A phase gate is never a soft stop. Phase 1 Gate and Phase 2 Gate require explici
 ## Stage Order
 
 1. Existing change/spec check
-2. Complexity routing and path selection — governor internal
+2. Complexity routing and path selection — master internal
 3. If lightweight: route to opsx/OpenSpec artifact path
 4. If medium/heavyweight: load `dev-flow-planning`
 5. Pre-document clarification and documentation-start approval — `dev-flow-planning`
@@ -154,7 +154,7 @@ A phase gate is never a soft stop. Phase 1 Gate and Phase 2 Gate require explici
 9. Phase 2 Gate — explicit user approval before execution
 10. TDD execution and dynamic replanning — `dev-flow-execution`; Git decisions through `dev-flow-git`
 11. Acceptance — `dev-flow-acceptance`
-12. Completion gate — governor checks acceptance evidence and reports final state
+12. Completion gate — master checks acceptance evidence and reports final state
 
 Continue-by-default rule:
 
@@ -207,7 +207,7 @@ The final state is one of:
 - `ready-for-review`: artifacts/drafts exist but completion evidence is incomplete
 - `ready-to-report`: acceptance evidence proves the governed workflow reached its final state
 
-The governor may report `ready-to-report` only after `dev-flow-acceptance` confirms:
+The master may report `ready-to-report` only after `dev-flow-acceptance` confirms:
 
 1. required planning docs exist as files
 2. Phase 1 and Phase 2 gates were explicitly cleared
@@ -230,7 +230,7 @@ When a dev-flow session resumes, context was compacted, a new session starts, or
 
 Before any new planning, execution, Git, or acceptance action, reload or re-read:
 
-1. `dev-flow-governor`
+1. `dev-flow-master`
 2. the current phase skill: `dev-flow-planning`, `dev-flow-execution`, `dev-flow-git`, or `dev-flow-acceptance`
 3. canonical `progress.md` if present
 4. canonical `task-orchestration.md` if present

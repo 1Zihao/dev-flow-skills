@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.9] - 2026-04-27
+
+### Changed
+
+- Rename the entry routing skill from `dev-flow-governor` to `dev-flow-master` across OpenCode and Codex installs.
+- Update installer doctor checks, command entrypoints, planning template paths, and documentation for the new skill name.
+
 ## [0.1.8] - 2026-04-27
 
 ### Added

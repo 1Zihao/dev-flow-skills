@@ -1,10 +1,10 @@
 ---
-description: Enter the governed development flow through dev-flow-governor
+description: Enter the governed development flow through dev-flow-master
 ---
 
 Enter the governed development flow.
 
-Use `dev-flow-governor` as the top-level controller for deciding:
+Use `dev-flow-master` as the top-level controller for deciding:
 
 - whether the request should use the lightweight opsx artifact path or the governed document path
 - when `superpowers brainstorming` must happen
@@ -31,13 +31,13 @@ Examples:
 It should:
 
 1. Read the user's current request or context.
-2. Enter the `dev-flow-governor` skill.
+2. Enter the `dev-flow-master` skill.
 3. Let that skill decide the next governed step and load the required focused sub-skill (`dev-flow-planning`, `dev-flow-execution`, `dev-flow-git`, or `dev-flow-acceptance`).
 4. Present user-facing replies in Chinese.
 
 It should **not**:
 
-- duplicate the routing and gating logic already defined in `dev-flow-governor`
+- duplicate the routing and gating logic already defined in `dev-flow-master`
 - duplicate the detailed stage logic owned by focused `dev-flow-*` sub-skills
 - replace `opsx-propose`, `opsx-explore`, or `opsx-apply`
 - embed the four document templates directly
@@ -46,7 +46,7 @@ It should **not**:
 
 ## Expected Behavior
 
-After entering this command, the workflow should be governed by `dev-flow-governor`, which will decide whether to:
+After entering this command, the workflow should be governed by `dev-flow-master`, which will decide whether to:
 
 - check for existing change/spec context
 - route lightweight work into the built-in opsx artifact flow
@@ -65,7 +65,7 @@ Intermediate stage progress may be reported briefly, but should not imply a paus
 ## Guardrails
 
 - Keep this command short and stable
-- Treat `dev-flow-governor` as the owner of governance logic
+- Treat `dev-flow-master` as the owner of governance logic
 - Do not re-implement downstream opsx or superpowers behavior here
 - Use this command as an entry point, not as a second workflow engine
 - Do not let OpenSpec-path work end as oral discussion only when formal documents are required

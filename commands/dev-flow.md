@@ -8,7 +8,7 @@ Use this command as the Codex slash-command entrypoint for Dev Flow Skills.
 
 ## Workflow
 
-1. Use the `dev-flow-governor` skill to classify the request and choose the correct phase gate.
+1. Use the `dev-flow-master` skill to classify the request and choose the correct phase gate.
 2. If planning is required, use `dev-flow-planning` before implementation and wait for required user confirmations.
 3. During implementation, use `dev-flow-execution` to continue until all planned tasks settle.
 4. Use `dev-flow-git` before any Git side effect such as branching, committing, PR creation, patch generation, rollback, or cleanup.

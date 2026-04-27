@@ -85,11 +85,11 @@ Governed medium/heavy work requires persisted local files:
 
 Template sources:
 
-- `.opencode/skills/dev-flow-governor/templates/product-requirement-analysis.md`
-- `.opencode/skills/dev-flow-governor/templates/software-requirement-analysis.md`
-- `.opencode/skills/dev-flow-governor/templates/high-level-design.md`
-- `.opencode/skills/dev-flow-governor/templates/detailed-design.md`
-- `.opencode/skills/dev-flow-governor/templates/test-plan.md`
+- `.opencode/skills/dev-flow-master/templates/product-requirement-analysis.md`
+- `.opencode/skills/dev-flow-master/templates/software-requirement-analysis.md`
+- `.opencode/skills/dev-flow-master/templates/high-level-design.md`
+- `.opencode/skills/dev-flow-master/templates/detailed-design.md`
+- `.opencode/skills/dev-flow-master/templates/test-plan.md`
 
 Do not overwrite templates. Generated artifacts go under the project docs workspace.
 

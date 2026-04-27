@@ -108,7 +108,7 @@ For a longer prompt and platform-specific details, see [`install/agent-install.m
 
 | Skill | Responsibility |
 | --- | --- |
-| `dev-flow-governor` | Entry routing, classification, phase gates, and recovery signals |
+| `dev-flow-master` | Entry routing, classification, phase gates, and recovery signals |
 | `dev-flow-planning` | Clarification before docs, formal planning docs, task DAG, and test matrix |
 | `dev-flow-execution` | Continuous execution, task settlement, dynamic replanning, and runtime state |
 | `dev-flow-git` | Worktree, shared-working-tree, branch, PR, patch, rollback, and conflict safety |

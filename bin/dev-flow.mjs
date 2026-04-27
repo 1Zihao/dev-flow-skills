@@ -171,7 +171,7 @@ async function doctor() {
   const target = targetRoot();
   const required = [
     'command/dev-flow.md',
-    'skills/dev-flow-governor/SKILL.md',
+    'skills/dev-flow-master/SKILL.md',
     'skills/dev-flow-planning/SKILL.md',
     'skills/dev-flow-execution/SKILL.md',
     'skills/dev-flow-git/SKILL.md',
@@ -263,7 +263,7 @@ async function doctorCodex() {
   const skillsTarget = codexTargetRoot();
   const commandTarget = codexCommandTarget();
   const required = [
-    'dev-flow-governor/SKILL.md',
+    'dev-flow-master/SKILL.md',
     'dev-flow-planning/SKILL.md',
     'dev-flow-execution/SKILL.md',
     'dev-flow-git/SKILL.md',

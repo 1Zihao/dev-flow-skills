@@ -105,7 +105,7 @@ A task is settled only on one final signal:
 - `final_success`: required done signal with changed files, diagnostics, tests, quality evidence, and Git/patch state
 - `final_failed`: explicit report that task cannot complete under current plan, with context
 - `final_blocked`: explicit blocker not resolvable by local fallback/retry
-- `cancelled_by_governor`: only under documented hard-stop/recovery rule
+- `cancelled_by_master`: only under documented hard-stop/recovery rule
 
 Never treat these as final failure by themselves:
 

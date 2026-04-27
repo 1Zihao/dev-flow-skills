@@ -35,7 +35,7 @@ dev-flow doctor --global
   command/
     dev-flow.md
   skills/
-    dev-flow-governor/
+    dev-flow-master/
     dev-flow-planning/
     dev-flow-execution/
     dev-flow-git/
@@ -48,12 +48,12 @@ dev-flow doctor --global
 .opencode/command/dev-flow.md
 ```
 
-The command is intentionally thin. It enters `dev-flow-governor`, which owns routing, classification, phase gates, and focused skill selection.
+The command is intentionally thin. It enters `dev-flow-master`, which owns routing, classification, phase gates, and focused skill selection.
 
 ## Skills
 
 ```text
-.opencode/skills/dev-flow-governor/
+.opencode/skills/dev-flow-master/
 .opencode/skills/dev-flow-planning/
 .opencode/skills/dev-flow-execution/
 .opencode/skills/dev-flow-git/

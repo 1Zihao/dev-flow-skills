@@ -2,9 +2,9 @@
 
 Dev Flow Skills splits the development flow into focused skills.
 
-## Phase 0: Governor
+## Phase 0: Master
 
-`dev-flow-governor` classifies the request, selects the path, checks gates, and determines which focused skill owns the next stage.
+`dev-flow-master` classifies the request, selects the path, checks gates, and determines which focused skill owns the next stage.
 
 ## Phase 1: Planning
 

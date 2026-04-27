@@ -55,10 +55,10 @@ Use the slash command when available:
 /dev-flow <your task>
 ```
 
-Or ask Codex to use the governor skill explicitly:
+Or ask Codex to use the master skill explicitly:
 
 ```text
-Use the dev-flow-governor skill for this task and follow the dev-flow planning, execution, git, and acceptance workflow.
+Use the dev-flow-master skill for this task and follow the dev-flow planning, execution, git, and acceptance workflow.
 ```
 
 OpenCode and Codex use different command locations. OpenCode `/dev-flow` is installed through `.opencode/command/dev-flow.md`; Codex `/dev-flow` is installed through `~/.agents/commands/dev-flow.md` or a plugin-root `commands/dev-flow.md`.
