@@ -1,6 +1,6 @@
 {
   "name": "dev-flow-skills",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Governed development-flow skills for AI coding agents.",
   "type": "module",
   "bin": {
@@ -29,5 +29,13 @@
     "dev-flow",
     "workflow"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1Zihao/dev-flow-skills.git"
+  },
+  "bugs": {
+    "url": "https://github.com/1Zihao/dev-flow-skills/issues"
+  },
+  "homepage": "https://github.com/1Zihao/dev-flow-skills#readme",
   "license": "MIT"
 }
